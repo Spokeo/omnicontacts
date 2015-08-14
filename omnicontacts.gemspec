@@ -4,7 +4,7 @@ require File.expand_path('../lib/omnicontacts', __FILE__)
 Gem::Specification.new do |gem|
   gem.name = 'omnicontacts'
   gem.description = %q{A generalized Rack middleware for importing contacts from major email providers.}
-  gem.authors = ['Daniel Alkala', 'Randy Villanueva']
+  gem.authors = ['Diego Castorina', 'Jordan Lance', 'Daniel Alkalai', 'Randy Villanueva']
   gem.email = ['dalkalai@spokeo.com', 'rvillanueva@spokeo.com']
 
   gem.add_runtime_dependency 'rack'

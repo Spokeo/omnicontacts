@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    omnicontacts (0.4.0)
+    omnicontacts (0.4.0.spokeo)
       json
       rack
 
