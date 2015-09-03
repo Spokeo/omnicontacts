@@ -62,12 +62,9 @@ module OmniContacts
 
         taggable_info['data'].each do |taggable_contact|
 
-          taggable_contact_name = taggable_contact['name']
-          # if this taggable contact's picture url is not in the set of picture_urls,
-          # or if the taggable contact's name has not been added to our set of taggable unique contacts
-          # include the contact to the taggable unique array
-          taggable_unique << taggable_contact if (picture_urls.exclude?(taggable_contact['picture']['data']['url']) || app_friend_names.exclude?(taggable_contact_name))
-          app_friend_names.add(taggable_contact_name)
+          unless contact_included?(taggable_contact, picture_urls, app_friend_names)
+            taggable_unique << taggable_contact
+          end
 
         end
 
@@ -75,6 +72,10 @@ module OmniContacts
         taggable_info['data'] = combined_friends
         new_taggable_friends_response = taggable_info.to_json
         contacts_from_response(spouse_response, family_response, new_taggable_friends_response)
+      end
+
+      def contact_included?(taggable_contact, picture_urls, app_friend_names)
+        picture_urls.include?(taggable_contact['picture']['data']['url']) && app_friend_names.include?(taggable_contact['name'])
       end
 
       def fetch_current_user access_token
