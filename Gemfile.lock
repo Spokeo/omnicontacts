@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    omnicontacts (0.4.0.spokeo)
+    omnicontacts (0.4.1.spokeo)
       json
       rack
 
@@ -28,7 +28,7 @@ GEM
       geminabox-jgraichen (>= 0.12.2.4)
     httpclient (2.4.0)
     httpclient-jgraichen (2.3.4.2)
-    json (1.8.2)
+    json (1.8.3)
     multi_json (1.1.0)
     multipart-post (2.0.0)
     nesty (1.0.2)
