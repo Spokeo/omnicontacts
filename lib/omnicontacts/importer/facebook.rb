@@ -47,7 +47,6 @@ module OmniContacts
           spouse_response = https_get(@contacts_host, spouse_path, {:access_token => access_token, :fields => 'first_name,last_name,name,id,gender,picture'})
         end
         family_response = https_get(@contacts_host, @family_path, {:access_token => access_token, :fields => 'first_name,last_name,name,id,gender,picture,relationship'})
-
         friends_response = https_get(@contacts_host, @friends_path, {:access_token => access_token, :fields => 'first_name,last_name,name,id,gender,picture', :limit => PAGE_SIZE})
         friends_response = iterate_pages(friends_response, access_token)
         friends_info = JSON.parse(friends_response)
@@ -57,12 +56,26 @@ module OmniContacts
 
         taggable_friends_response = https_get(@contacts_host, @taggable_friends_path, {:access_token => access_token, :fields => 'first_name,last_name,name,id,gender,picture', :limit => total_friends})
         taggable_info = JSON.parse(taggable_friends_response)
-        taggable_unique = taggable_info['data'].reject { |info| picture_urls.include? info['picture']['data']['url'] }
+
+        app_friend_names = friends_info['data'].map{|ele| ele['name']}.to_set || Set.new
+        taggable_unique = []
+
+        taggable_info['data'].each do |taggable_contact|
+
+          unless contact_included?(taggable_contact, picture_urls, app_friend_names)
+            taggable_unique << taggable_contact
+          end
+
+        end
+
         combined_friends = friends_info['data'] + taggable_unique
         taggable_info['data'] = combined_friends
         new_taggable_friends_response = taggable_info.to_json
-
         contacts_from_response(spouse_response, family_response, new_taggable_friends_response)
+      end
+
+      def contact_included?(taggable_contact, picture_urls, app_friend_names)
+        picture_urls.include?(taggable_contact['picture']['data']['url']) && app_friend_names.include?(taggable_contact['name'])
       end
 
       def fetch_current_user access_token
