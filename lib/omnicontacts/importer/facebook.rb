@@ -15,7 +15,7 @@ module OmniContacts
         super app, client_id, client_secret, options
         @auth_host = 'graph.facebook.com'
         @authorize_path = '/v2.3/oauth/authorize'
-        @scope = 'email,user_relationships,user_birthday'
+        @scope = 'email,user_relationships,user_birthday,user_friends'
         @auth_token_path = '/v2.3/oauth/access_token'
         @contacts_host = 'graph.facebook.com'
         @friends_path = '/v2.3/me/friends'
