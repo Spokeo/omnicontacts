@@ -1,6 +1,6 @@
 module OmniContacts
   
-  VERSION = "0.4.1.spokeo"
+  VERSION = "0.4.2.spokeo"
 
   MOUNT_PATH = "/contacts/"
 
